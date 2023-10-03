@@ -10,7 +10,11 @@
         {% block javascripts %}
         {% endblock %}
     </head>
+    <header>
+        {{ render(controller('App\\Controller\\FilmsController::liste')) }}
+    </header>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
     </body>
 </html>
