@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-
-{% block title %} {{ film.nom }} {% endblock %}
+{% block title %} {{ film.title }} {% endblock %}
 
 {% block body %}
 <style>
@@ -9,17 +8,22 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 <div class="example-wrapper">
-    <h1>{{ film.nom }}</h1>
-
-    <ul>
-        <li>Date de sortie : {{ film.date }}</li>
-        <li>Réalisateur : {{ film.real }}</li>
-        <li>Type : </li>
-        <ul>
-            {% for item in film.type %}
-                <li>{{ item }}</li>
+    <div class="card mt-3 border-dark">
+        <div class="card-header">
+            {{film.title}}
+        </div>
+        <div class="card-body">
+            <p class="card-title">Date de sortie : {{ film.realeaseAt|date('d/m/Y') }}</h5>
+            <p class="card-title">Poster : {{ film.poster }}</p>
+            <p class="card-title">Pays : {{ film.country }}</p>
+            <p class="card-title">Résumé : {{ film.plot }}</p>
+            <p class="card-title">Prix : {{ film.price }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-center">
+            {% for item in film.genres %}
+                <a href="#" class="btn btn-primary disabled">{{ item.nom }}</a>
             {% endfor %}
-        </ul>
-    </ul>
+        </div>
+    </div>
 </div>
 {% endblock %}

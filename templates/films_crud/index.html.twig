@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Films index{% endblock %}
+
+{% block body %}
+    <h1>Films index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Poster</th>
+                <th>Country</th>
+                <th>RealeaseAt</th>
+                <th>Plot</th>
+                <th>Price</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for film in films %}
+            <tr>
+                <td>{{ film.id }}</td>
+                <td>{{ film.title }}</td>
+                <td>{{ film.poster }}</td>
+                <td>{{ film.country }}</td>
+                <td>{{ film.realeaseAt ? film.realeaseAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ film.plot }}</td>
+                <td>{{ film.price }}</td>
+                <td>
+                    <a href="{{ path('app_films_crud_show', {'id': film.id}) }}">show</a>
+                    <a href="{{ path('app_films_crud_edit', {'id': film.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_films_crud_new') }}">Create new</a>
+{% endblock %}

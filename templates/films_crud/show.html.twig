@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Films{% endblock %}
+
+{% block body %}
+    <h1>Films</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ film.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ film.title }}</td>
+            </tr>
+            <tr>
+                <th>Poster</th>
+                <td>{{ film.poster }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ film.country }}</td>
+            </tr>
+            <tr>
+                <th>RealeaseAt</th>
+                <td>{{ film.realeaseAt ? film.realeaseAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Plot</th>
+                <td>{{ film.plot }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ film.price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_films_crud_index') }}">back to list</a>
+
+    <a href="{{ path('app_films_crud_edit', {'id': film.id}) }}">edit</a>
+
+    {{ include('films_crud/_delete_form.html.twig') }}
+{% endblock %}

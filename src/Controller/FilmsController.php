@@ -5,54 +5,37 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\FilmsRepository;
+use App\Service\OmdbApiConsumer;
+use App\Service\SaveApiFilmService;
 
 class FilmsController extends AbstractController
 {
 
-    private $tableau = [
-        [
-            'date' => '00/00/00',
-            'nom' => 'Test',
-            'real' => 'BLBL blbl',
-            'type' => ['Humour'],
-            'id' => 1,
-        ],
-        [
-            'date' => '00/00/00',
-            'nom' => 'AAAAAAAA',
-            'real' => 'BLBL blbl',
-            'type' => ['Action', 'Humour'],
-            'id' => 2,
-        ],
-        [
-            'date' => '00/00/00',
-            'nom' => 'blbl',
-            'real' => 'BLBL blbl',
-            'type' => ['Action', 'Humour'],
-            'id' => 3,
-        ],
-        [
-            'date' => '00/00/00',
-            'nom' => 'Test2',
-            'real' => 'BLBL blbl',
-            'type' => ['Action'],
-            'id' => 4,
-        ],
-    ];
+    public function __construct(private OmdbApiConsumer $omdb, private SaveApiFilmService $saveService)
+    {
+        
+    }
 
-    #[Route('/films', name: 'app_films')]
-    public function liste(): Response
+    // #[Route('/films', name: 'app_films')]
+    public function liste(FilmsRepository $filmRepo): Response
     {
         return $this->render('films/index.html.twig', [
-            'films' => $this->tableau,
+            'films' => $filmRepo->findBy(array(), array(), 3),
         ]);
     }
 
     #[Route('/films/{idFilm<\d+>}', name: 'films_detail')]
-    public function index(int $idFilm = 0): Response
+    public function index(int $idFilm = 1, FilmsRepository $filmRepo): Response
     {
         return $this->render('films/details.html.twig', [
-            'film' => $this->tableau[$idFilm - 1]
+            'film' => $filmRepo->findOneById($idFilm)
         ]);
+    }
+
+    #[Route(path: '/films/testApi/{nomFilm}', name: 'testApi')]
+    public function getInfosFromService($nomFilm = 'Spider man'){
+        $this->saveService->saveFilm($this->omdb->getInfos($nomFilm)->getContent());
+        return $this->redirectToRoute('app_films_crud_index');
     }
 }
