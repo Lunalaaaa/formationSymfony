@@ -17,13 +17,18 @@
             <p class="card-title">Poster : {{ film.poster }}</p>
             <p class="card-title">Pays : {{ film.country }}</p>
             <p class="card-title">Résumé : {{ film.plot }}</p>
-            <p class="card-title">Prix : {{ film.price }}</p>
+            <p class="card-title">Age : {{ film.age }}</p>
+            {% if app.user == null %}
+                <a href={{ path('app_login') }}><button type="button" class="btn btn-info text-white">Connecter vous pour commander le film</button></a>
+            {% elseif app.user.age > film.age %}
+                <button type="button" class="btn btn-info text-white">Commander</button>
+            {% endif %}
         </div>
         <div class="card-footer d-flex justify-content-center">
             {% for item in film.genres %}
                 <a href="#" class="btn btn-primary disabled">{{ item.nom }}</a>
             {% endfor %}
         </div>
-    </div>
+    </div>   
 </div>
 {% endblock %}

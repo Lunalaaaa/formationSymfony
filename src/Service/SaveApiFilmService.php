@@ -34,7 +34,10 @@ class SaveApiFilmService {
         $film->setCountry($array['Country']);
         $film->setPlot($array['Plot']);
         $film->setPoster($array['Poster']);
-        $film->setAge(explode('-', $array['Rated'])[1]);
+        if(str_contains('PG', $array['Rated'])){
+            $film->setAge(13);
+        }
+        else $film->setAge(17);
         // bien formatter la date
         $date = new DateTimeImmutable($array['Year'] . '-01-01');
         $film->setRealeaseAt($date);

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Films;
+use App\EventSubscriber\AccessMovieSubscriber;
 use App\Form\FilmsType;
 use App\Repository\FilmsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/films/crud')]
+#[Route('/admin/films/crud')]
 class FilmsCrudController extends AbstractController
 {
     #[Route('/', name: 'app_films_crud_index', methods: ['GET'])]
